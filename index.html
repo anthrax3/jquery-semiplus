@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jquery Semi Plus</title>
+    <script src="jquery.min.js"></script>
+    <script src="jquery.semiplus.js"></script>
+<script>
+$(function(){
+    String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
+    function render(text)
+    {
+        var fn = text.split('-'),
+            fnName = "";
+        $.each(fn,function(k,v){
+            if(k == 0)
+            {
+                fnName += v;
+            }else{
+                fnName += v.capitalize();
+            }
+        });
+        
+        return '$.fn.'+fnName+' = function(options){\
+            return !options ? $(this).css("'+text+'") : \
+            this.each(function(){\
+                $(this).css(\''+text+'\',options);\
+            });\
+        }';
+    }
+    
+    var textarea = $('<textarea>');
+        $('body').append(textarea);
+    $('.w3-table-all tbody tr').each(function(){
+        var text = $('td:first a',$(this)).text();
+        if(text)
+        {
+            //textarea.val(textarea.val() + render(text));
+        }
+    }); 
+    
+    var div = $('div');
+    
+    
+    var cssKurallari = div.allRules('css');
+    
+    if(cssKurallari.display)
+    {
+        console.log('display var');
+    }else{
+        console.log('display yok');
+    }
+    
+});
+    
+    
+</script>
+</head>
+<body>
+<div style="color: red;background: rgba(0,0,0,.5);width:300px;height: 200px;">deneme</div>
+</body>
+</html>
