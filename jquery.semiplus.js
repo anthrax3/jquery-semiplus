@@ -1815,12 +1815,15 @@
         switch(options)
         {
             case 'html':
-                console.log($(this));
+                var htmlAttributes = [];
+                $.each($(this)[0].attributes,function(k,v){
+                   htmlAttributes[v.nodeName] = v.nodeValue;
+                });
+                return htmlAttributes;
             break;
             case 'css':
                 var cssRules = [],
                     cssText = $(this)[0].style.cssText.split(';');
-                    
                     $.each(cssText,function(k,v){
                        if(v)
                        {
@@ -1829,12 +1832,29 @@
                             cssRules[v[0]] = v[1].trim();
                        }
                     });
-                
-                return cssRules;
-                
+                return cssRules;   
             break;
             default:
-                console.log($(this));
+                /* HTML */
+                var htmlAttributes = [];
+                $.each($(this)[0].attributes,function(k,v){
+                   htmlAttributes[v.nodeName] = v.nodeValue;
+                });
+                /* CSS */
+                var cssRules = [],
+                    cssText = $(this)[0].style.cssText.split(';');
+                    $.each(cssText,function(k,v){
+                       if(v)
+                       {
+                            v = v.replace(' ','');
+                            v = v.split(':');
+                            cssRules[v[0]] = v[1].trim();
+                       }
+                    });
+               var ret = [];
+                    ret['html'] = htmlAttributes;
+                    ret['css'] = cssRules;
+                    return ret;
             break;
         }
     }
