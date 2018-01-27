@@ -1811,6 +1811,7 @@
     
     /* OTHER */
     
+    /* allRules */
     $.fn.allRules = function(options) {
         switch(options)
         {
@@ -1857,6 +1858,44 @@
                     return ret;
             break;
         }
+    }
+    
+    /* getAllFormValues */
+    
+
+    
+    $.fn.getAllFormValues = function(options)
+    {
+        
+        var opt = $.extend({
+            "accept" : 'input, select, textarea, button, a, checkbox, radio',
+            'baseAttr' : 'name'
+        },options);
+        
+        var th = $(this);
+        var all = [];
+        $.each($(opt.accept,th),function(_k){
+            var itemTh = $(this);
+            var attrList = [];
+            $.each($(this)[0].attributes,function(k,v){
+               if(v && v != "")
+               {
+                   attrList[v.nodeName] = v.nodeValue;
+               }
+            });
+            $.each($(this)[0].style.cssText.split(';'),function(k,v){
+               if(v)
+               {
+                    v = v.replace(' ','');
+                    v = v.split(':');
+                    attrList[v[0]] = v[1].trim();
+               }
+            });
+            attrList['value'] = $(this).val();
+            all[itemTh.attr(opt.baseAttr)] = attrList;
+        });
+        
+        return all;
     }
     
     

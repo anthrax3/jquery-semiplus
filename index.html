@@ -7,54 +7,37 @@
     <script src="jquery.semiplus.js"></script>
 <script>
 $(function(){
-    String.prototype.capitalize = function() {
-        return this.charAt(0).toUpperCase() + this.slice(1);
-    }
-    function render(text)
-    {
-        var fn = text.split('-'),
-            fnName = "";
-        $.each(fn,function(k,v){
-            if(k == 0)
-            {
-                fnName += v;
-            }else{
-                fnName += v.capitalize();
-            }
+
+    $('.send').padding('12px').marginTop('20px');
+    $('form').onclick('return false');
+    
+    
+    $('.send').on('click',function(e){
+        
+        var allInputs = $('.form').getAllFormValues({
+            accept : 'input',
+            baseAttr : 'name'
         });
         
-        return '$.fn.'+fnName+' = function(options){\
-            return !options ? $(this).css("'+text+'") : \
-            this.each(function(){\
-                $(this).css(\''+text+'\',options);\
-            });\
-        }';
-    }
-    
-    var textarea = $('<textarea>');
-        $('body').append(textarea);
-    $('.w3-table-all tbody tr').each(function(){
-        var text = $('td:first a',$(this)).text();
-        if(text)
-        {
-            //textarea.val(textarea.val() + render(text));
-        }
-    }); 
-    
-    var div = $('div');
-    
-    
-    var cssKurallari = div.allRules();
-    
-    console.log(cssKurallari);
-
+        console.log(allInputs);
+       
+        e.preventDefault();
+    });
     
 });
-    
-    
 </script>
 </head>
 <body>
-<div class="deneme" id="deneme" href="www.google.com" style="color: red;background: rgba(0,0,0,.5);width:300px;">deneme</div>
+
+<form action="" class="form" method="post">
+    <input type="text" name="deneme_1" class="deneme_class_1">
+    <input type="text" name="deneme_2" class="deneme_class_2">
+    <input type="text" name="deneme_3" class="deneme_class_3">
+    <input type="text" name="deneme_4" class="deneme_class_4">
+    <input type="text" name="deneme_5" class="deneme_class_5">
+    
+    <button type="button" class="send">Gönder</button>
+</form>
+
 </body>
 </html>
